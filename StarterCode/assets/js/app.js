@@ -127,7 +127,15 @@ function updateToolTip(chosenXAxis, chosenYAxis, circlesGroup) {
 
     var toolTip = d3.tip()
         .attr("class", "d3-tip")
-        .offset([45, -90])
+        .offset(function() {
+            if (chosenXAxis === "income") {
+                return [45, -100]
+            }
+            else if (chosenYAxis === "healthcare") {
+                return [45, -90]
+            }
+            return [45, -70]
+        })
         .html(function(d) {
             if (chosenXAxis === "age") {
                 return (`${d.state}<br>${xLabel} ${d[chosenXAxis]}<br>${yLabel} ${d[chosenYAxis]}%`);
