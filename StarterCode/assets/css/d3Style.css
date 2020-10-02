@@ -26,13 +26,20 @@
 /* font size dependent on radius, see app.js */
 .stateText {
   font-family: sans-serif;
-  fill: #fff;
+  font-size: 13px;
+  /* fill: #fff; */
+  fill: black;
   text-anchor: middle;
 }
 
 .stateCircle {
   fill: #89bdd3;
-  stroke: #e3e3e3;
+  /* stroke: #cccccc; */
+  opacity: 50%;
+}
+
+.hidden {
+  fill: rgba(252, 252, 252, 0);
 }
 
 .chart {
@@ -51,6 +58,22 @@
   background: rgba(0, 0, 0, 0.8);
   border-radius: 4px;
 }
+
+/* Creates a small triangle for the tooltip */
+/* .d3-tip:after {
+  display:inline-block;
+  font-size: 7px;
+  line-height: 1;
+  color: rgb(0, 0, 0);
+  content: "\25BC";
+  left: 11px;
+  top: -17px;
+  position: relative;
+  -webkit-transform: rotate(-90deg);
+  -moz-transform: rotate(-90deg);
+  -o-transform: rotate(-90deg);
+  transform: rotate(-90deg);
+} */
 
 /* Mobile Rules */
 @media screen and (max-width: 530px) {
