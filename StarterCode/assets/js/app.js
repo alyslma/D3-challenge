@@ -1,6 +1,6 @@
 // Define measurements
 var svgWidth = 1000;
-var svgHeight = 500;
+var svgHeight = 550;
 
 var margin = {
     top: 20,
@@ -12,12 +12,11 @@ var margin = {
 var width = svgWidth - margin.left - margin.right;
 var height = svgHeight - margin.top - margin.bottom;
 
-// Create an SVG wrapper, append an SVG group that will hold our chart, and shift the latter by left and top margins.
-var svg = d3
-    .select("#scatter")
+// Create an SVG wrapper, append an SVG group that will hold our chart, and create responsive viewBox.
+var svg = d3.select("#scatter")
     .append("svg")
-    .attr("width", svgWidth)
-    .attr("height", svgHeight);
+    .attr("viewBox", "5 0 1000 550")
+    .attr("preserveAspectRatio", "xMinYMin");
 
 // Append an SVG group
 var chartGroup = svg.append("g")
@@ -34,7 +33,7 @@ var chosenYAxis = "healthcare";
 function xScale(censusData, chosenXAxis) {
     // Create scales
     var xLinearScale = d3.scaleLinear()
-        .domain([d3.min(censusData, d => d[chosenXAxis]) * 0.95,
+        .domain([d3.min(censusData, d => d[chosenXAxis]) * 0.9,
             d3.max(censusData, d => d[chosenXAxis]) * 1.05
         ])
         .range([0, width]);
@@ -42,10 +41,10 @@ function xScale(censusData, chosenXAxis) {
     return xLinearScale;
 }
 
-// Create y scale function
+// Create y-scale function
 function yScale(censusData, chosenYAxis) {
     var yLinearScale = d3.scaleLinear()
-        .domain([d3.min(censusData, d => d[chosenYAxis]) * 0.8,
+        .domain([d3.min(censusData, d => d[chosenYAxis]) * 0.75,
         d3.max(censusData, d => d[chosenYAxis])])
         .range([height, 0]);
     
@@ -202,13 +201,13 @@ d3.csv("assets/data/data.csv").then(function(censusData, error) {
 
     // Append initial circles
     var circlesGroup = chartGroup.selectAll("circle")
-    .data(censusData)
-    .enter()
-    .append("circle")
-    .attr("cx", d => xLinearScale(d[chosenXAxis]))
-    .attr("cy", d => yLinearScale(d[chosenYAxis]))
-    .attr("r", 14)
-    .classed("stateCircle", true);
+        .data(censusData)
+        .enter()
+        .append("circle")
+        .attr("cx", d => xLinearScale(d[chosenXAxis]))
+        .attr("cy", d => yLinearScale(d[chosenYAxis]))
+        .attr("r", 14)
+        .classed("stateCircle", true);
 
     // Show state abbreviation in circle
     var circlesAbbrev = chartGroup.selectAll()
@@ -222,14 +221,14 @@ d3.csv("assets/data/data.csv").then(function(censusData, error) {
 
     // Append transparent circle over both initial circles and state abbreviations
     var circlesHidden = chartGroup.selectAll("circle.hidden")
-    .data(censusData)
-    .enter()
-    .append("circle")
-    .attr("cx", d => xLinearScale(d[chosenXAxis]))
-    .attr("cy", d => yLinearScale(d[chosenYAxis]))
-    .attr("r", 14)
-    .attr("stroke", "rgba(252,252,252,0)")
-    .classed("hidden", true);
+        .data(censusData)
+        .enter()
+        .append("circle")
+        .attr("cx", d => xLinearScale(d[chosenXAxis]))
+        .attr("cy", d => yLinearScale(d[chosenYAxis]))
+        .attr("r", 14)
+        .attr("stroke", "rgba(252,252,252,0)")
+        .classed("hidden", true);
 
     // Create group for x-axis labels
     var xLabelsGroup = chartGroup.append("g")
